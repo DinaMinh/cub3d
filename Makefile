@@ -60,7 +60,7 @@ $(BIN_DIR):
 
 $(BIN_DIR)$(NAME): $(OBJ) $(LIBFT) $(MLX) | $(BIN_DIR)
 	@echo "[COMPILING] $@ binary"
-	@$(CC) $(CFLAGS) $(OBJ) -o $@ -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11
+	@$(CC) $(CFLAGS) $(OBJ) -o $@ -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 	@echo -----------------------------------------
 	@echo -e "|	Compiled $(GREEN)$(NAME)$(NORMAL) binary 💅	|"
 	@echo -----------------------------------------
@@ -69,7 +69,7 @@ $(MLX):
 	$(MAKE) -C $(MLX_DIR)
 
 debug: | $(BIN_DIR)
-	@$(CC) $(DEBUG_FLAGS) -o $(BIN_DIR)$(NAME) $(addprefix $(SRC_DIR), $(SRCS))
+	@$(CC) $(DEBUG_FLAGS) -o $(BIN_DIR)$(NAME) $(addprefix $(SRC_DIR), $(SRCS)) -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 clean:
 	@rm -rf $(OBJ_DIR)
