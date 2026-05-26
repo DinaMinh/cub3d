@@ -11,7 +11,8 @@ MLX := $(MLX_DIR)libmlx.a
 
 CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES) -I$(LIBFT_INCLUDES) -I$(MLX_INCLUDES)
 
-SRCS := main.c
+SRCS := main.c ft_input.c ft_movements.c ft_camera.c ft_raycasting.c \
+		ft_raycasting_utils.c
 
 SRC_DIR := ./srcs/
 
