@@ -80,7 +80,7 @@ void	ft_check_hori_ray(t_game *game)
 	if (game->ray.mx >= 0 && game->ray.mx < 6
 			&& game->ray.my >= 0 && game->ray.my < 6)
 	{
-		if (map[game->ray.my][game->ray.mx] == 1)
+		if (map[game->ray.my][game->ray.mx] == '1')
 		{
 			game->ray.hx = game->ray.x;
 			game->ray.hy = game->ray.y;
@@ -105,7 +105,7 @@ void	ft_check_vert_ray(t_game *game)
 	if (game->ray.mx >= 0 && game->ray.mx < 6
 			&& game->ray.my >= 0 && game->ray.my < 6)
 	{
-		if (map[game->ray.my][game->ray.mx] == 1)
+		if (map[game->ray.my][game->ray.mx] == '1')
 		{
 			game->ray.vx = game->ray.x;
 			game->ray.vy = game->ray.y;

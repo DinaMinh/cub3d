@@ -6,20 +6,20 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:46:53 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/26 10:32:06 by dminh            ###   ########.fr       */
+/*   Updated: 2026/05/27 13:26:29 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	map[6][6] =
+char	map[6][11] =
 {
-	{1, 1, 1, 1, 1, 1},
-	{1, 0, 1, 0, 0, 1},
-	{1, 0, 1, 0, 0, 1},
-	{1, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 1},
+	"    111111",
+	"111101",
+	"101001",
+	"100001",
+	"100001",
+	"111111",
 };
 
 int	ft_click_cross(t_game *game)
@@ -36,7 +36,7 @@ void	ft_pixel_put(t_game *game, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || x > 720 || y < 0 || y > 1280)
+	if (y < 0 || y > 720 || x < 0 || x > 1280)
 		return ;
 	dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
@@ -71,9 +71,7 @@ void	ft_draw_angle(t_game *game)
 	i = 0;
 	while (i < 20)
 	{
-		ft_pixel_put(game, x, y, RED);
-		ft_pixel_put(game, x - 1, y, RED);
-		ft_pixel_put(game, x, y + 1, RED);
+		ft_pixel_put(game, x / M_SCALE, y / M_SCALE, RED);
 		x += game->player.dir_x; 
 		y += game->player.dir_y;
 		i++;
@@ -86,14 +84,15 @@ void	ft_draw_square_map(t_game *game, int x, int y, int color)
 	int	j;
 
 	i = 0;
-	while (i < TILES - 1)
+	while (i < M_TILES - 1)
 	{
 		j = 0;
-		while (j < TILES - 1)
+		while (j < M_TILES - 1)
 		{
 			ft_pixel_put(game, x + j, y + i, color);
 			j++;
 		}
+			ft_pixel_put(game, x + j, y + i, 0x00FFFF00);
 		i++;
 	}
 }
@@ -110,15 +109,17 @@ void	ft_draw_map(t_game *game)
 		x = 0;
 		while (x < 6)
 		{
-			if (map[y][x] == 1)
+			if (map[y][x] == '1')
 				color = WHITE;
 			else
 				color = PURPLE;
-			ft_draw_square_map(game, x * TILES, y * TILES, color);
+			ft_draw_square_map(game, x * M_TILES, y * M_TILES, color);
 			x++;
 		}
 		y++;
 	}
+	ft_draw_angle(game);
+	ft_draw_square(game, game->player.pos_x / M_SCALE - (PLAYER_W / 2), game->player.pos_y / M_SCALE - (PLAYER_W / 2), PLAYER_W);
 }
 
 int	main(void)
@@ -143,10 +144,8 @@ int	main(void)
 	game.player.dir_y = sin(game.player.angle);
 	game.img = mlx_new_image(game.mlx_ptr, 1280, 720);
 	game.addr = mlx_get_data_addr(game.img, &game.bits_per_pixel, &game.line_length, &game.endian);
-	ft_draw_map(&game);
-	ft_draw_angle(&game);
-	ft_draw_square(&game, game.player.pos_x - SPEED, game.player.pos_y - SPEED, 10);
 	ft_draw_rays(&game);
+	ft_draw_map(&game);
 	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.img, 0, 0);
 	mlx_loop(game.mlx_ptr);
 	return (0);

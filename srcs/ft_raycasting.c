@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:59:27 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/26 17:45:10 by dminh            ###   ########.fr       */
+/*   Updated: 2026/05/27 11:27:53 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_draw_line(t_game *game)
 	i = 0;
 	while (i < longest)
 	{
-		ft_pixel_put(game, x, y, PINK);
+		ft_pixel_put(game, x / M_SCALE, y / M_SCALE, PINK);
 		x += (game->ray.x - game->player.pos_x) / longest;
 		y += (game->ray.y - game->player.pos_y) / longest; 
 		i++;
@@ -75,7 +75,7 @@ void	ft_draw_walls(t_game *game)
 	int		width;
 	
 	start_y = 360 - (game->ray.line_h / 2);
-	width = 1280 / 60;
+	width = 1280 / 64;
 	i = 0;
 	temp_y = start_y;
 	x = game->ray.r * width;
@@ -102,7 +102,7 @@ void	ft_draw_rays(t_game *game)
 		game->ray.angle += 2 * M_PI;
 	else if (game->ray.angle > 2 * M_PI)
 		game->ray.angle -= 2 * M_PI;
-	while (game->ray.r < 60)
+	while (game->ray.r < 64)
 	{
 		ft_init_rays(game);
 		ft_check_hori(game);
@@ -114,9 +114,9 @@ void	ft_draw_rays(t_game *game)
 			ft_check_vert_ray(game);
 		ft_check_closest_ray(game);
 		ft_draw_line(game);
-		game->ray.line_h = TILES * 320 / game->ray.dist;
-		if (game->ray.line_h > 320)
-			game->ray.line_h = 320;
+		game->ray.line_h = TILES * 720 / game->ray.dist;
+		if (game->ray.line_h > 720)
+			game->ray.line_h = 720;
 		ft_draw_walls(game);
 		game->ray.r++;
 		game->ray.angle += DR;

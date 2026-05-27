@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:47:31 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/26 17:06:47 by dminh            ###   ########.fr       */
+/*   Updated: 2026/05/27 11:53:54 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include "libft.h"
 
 # define TILES 64
+# define M_TILES 16
+# define M_SCALE 4
+# define PLAYER_W 2.5
 # define SPEED 5
 # define YELLOW 0x00FFFF00
 # define RED 0x00CC3300
@@ -37,7 +40,7 @@
 # define DR 0.0174533
 # define MASSIVE 1000000
 
-extern int	map[6][6];
+extern char	map[6][11];
 
 typedef struct s_ray
 {

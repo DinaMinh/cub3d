@@ -36,7 +36,7 @@ NORMAL := \e[0m
 
 ITALIC := \e[3m
 
-DEBUG_FLAGS := $(CFLAGS) -g3
+DEBUG_FLAGS := $(CFLAGS) -fsanitize=address -g3
 
 MAKEFLAGS += --no-print-directory -j
 
@@ -69,7 +69,7 @@ $(BIN_DIR)$(NAME): $(OBJ) $(LIBFT) $(MLX) | $(BIN_DIR)
 $(MLX):
 	$(MAKE) -C $(MLX_DIR)
 
-debug: | $(BIN_DIR)
+debug: $(LIBFT) $(MLX) | $(BIN_DIR)
 	@$(CC) $(DEBUG_FLAGS) -o $(BIN_DIR)$(NAME) $(addprefix $(SRC_DIR), $(SRCS)) -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 clean:
