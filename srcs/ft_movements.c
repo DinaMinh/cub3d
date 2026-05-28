@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:11:35 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/27 11:40:28 by dminh            ###   ########.fr       */
+/*   Updated: 2026/05/28 09:33:50 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_movements(int keysym, t_game *game)
 		ft_right(game);
 	else if (keysym == XK_Left || keysym == XK_Right)
 		ft_camera(keysym, game);
-	ft_draw_rays(game);
 	ft_draw_map(game);
+	ft_draw_rays(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
 }

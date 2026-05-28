@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:04:19 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/26 17:05:12 by dminh            ###   ########.fr       */
+/*   Updated: 2026/05/28 09:40:44 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_check_hori(t_game *game)
 		printf("y = %f\n", game->ray.y);
 		game->ray.x = game->player.pos_x;
 		game->ray.y = game->player.pos_y;
-		game->ray.dof = 6;
+		game->ray.dof = game->ray.max_dof;
 	}
 	else if (game->ray.angle > M_PI)
 	{
@@ -52,7 +52,7 @@ void	ft_check_vert(t_game *game)
 	{
 		game->ray.x = game->player.pos_x;
 		game->ray.y = game->player.pos_y;
-		game->ray.dof = 6;
+		game->ray.dof = game->ray.max_dof;
 	}
 	else if (game->ray.angle > PI2 && game->ray.angle < PI3)
 	{
@@ -77,15 +77,15 @@ void	ft_check_hori_ray(t_game *game)
 {
 	game->ray.mx = (int)(game->ray.x) >> 6;
 	game->ray.my = (int)(game->ray.y) >> 6;
-	if (game->ray.mx >= 0 && game->ray.mx < 6
-			&& game->ray.my >= 0 && game->ray.my < 6)
+	if (game->ray.mx >= 0 && game->ray.mx < game->map.width
+			&& game->ray.my >= 0 && game->ray.my < game->map.height)
 	{
-		if (map[game->ray.my][game->ray.mx] == '1')
+		if (game->map.grid[game->ray.my][game->ray.mx] == '1')
 		{
 			game->ray.hx = game->ray.x;
 			game->ray.hy = game->ray.y;
 			game->ray.t_h = ft_dist(game, game->ray.hx, game->ray.hy);
-			game->ray.dof = 6;
+			game->ray.dof = game->ray.max_dof;
 		}
 		else
 		{
@@ -95,22 +95,22 @@ void	ft_check_hori_ray(t_game *game)
 		}
 	}
 	else
-		game->ray.dof = 6;
+		game->ray.dof = game->ray.max_dof;
 }
 
 void	ft_check_vert_ray(t_game *game)
 {
 	game->ray.mx = (int)(game->ray.x) >> 6;
 	game->ray.my = (int)(game->ray.y) >> 6;
-	if (game->ray.mx >= 0 && game->ray.mx < 6
-			&& game->ray.my >= 0 && game->ray.my < 6)
+	if (game->ray.mx >= 0 && game->ray.mx < game->map.width
+			&& game->ray.my >= 0 && game->ray.my < game->map.height)
 	{
-		if (map[game->ray.my][game->ray.mx] == '1')
+		if (game->map.grid[game->ray.my][game->ray.mx] == '1')
 		{
 			game->ray.vx = game->ray.x;
 			game->ray.vy = game->ray.y;
 			game->ray.t_v = ft_dist(game, game->ray.vx, game->ray.vy);
-			game->ray.dof = 6;
+			game->ray.dof = game->ray.max_dof;
 		}
 		else
 		{
@@ -120,5 +120,5 @@ void	ft_check_vert_ray(t_game *game)
 		}
 	}
 	else
-		game->ray.dof = 6;
+		game->ray.dof = game->ray.max_dof;
 }

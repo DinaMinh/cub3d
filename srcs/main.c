@@ -6,21 +6,11 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:46:53 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/27 13:26:29 by dminh            ###   ########.fr       */
+/*   Updated: 2026/05/28 09:33:42 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-char	map[6][11] =
-{
-	"    111111",
-	"111101",
-	"101001",
-	"100001",
-	"100001",
-	"111111",
-};
 
 int	ft_click_cross(t_game *game)
 {
@@ -92,7 +82,6 @@ void	ft_draw_square_map(t_game *game, int x, int y, int color)
 			ft_pixel_put(game, x + j, y + i, color);
 			j++;
 		}
-			ft_pixel_put(game, x + j, y + i, 0x00FFFF00);
 		i++;
 	}
 }
@@ -104,15 +93,17 @@ void	ft_draw_map(t_game *game)
 	int	color;
 
 	y = 0;
-	while (y < 6)
+	while (game->map.grid[y])
 	{
 		x = 0;
-		while (x < 6)
+		while (game->map.grid[y][x])
 		{
-			if (map[y][x] == '1')
+			if (game->map.grid[y][x] == '1')
 				color = WHITE;
-			else
+			else if (game->map.grid[y][x] == '0')
 				color = PURPLE;
+			else
+				color = 0x00000000;
 			ft_draw_square_map(game, x * M_TILES, y * M_TILES, color);
 			x++;
 		}
@@ -122,13 +113,55 @@ void	ft_draw_map(t_game *game)
 	ft_draw_square(game, game->player.pos_x / M_SCALE - (PLAYER_W / 2), game->player.pos_y / M_SCALE - (PLAYER_W / 2), PLAYER_W);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_game	game;
 
 	ft_memset(&game, 0, sizeof(game));
-	game.player.pos_x = 300;
-	game.player.pos_y = 300;
+	if (ac != 2)
+	{
+		printf("Error\nUsage: ./cub3D <file.cub>\n");
+		return (1);
+	}
+	init_map_struct(&game.map);
+	print_map_struct(&game.map, "Après Initialisation");
+	if (!parse_cub(av[1], &game.map)
+		|| !build_final_map(&game.map)
+		|| !validate_map_walls(&game.map))
+	{
+		printf("error map\n");
+		return (1);
+	}
+	int	i;
+	int	j;
+
+	i = 0;
+	while (game.map.grid[i])
+	{
+		j = 0;
+		while (game.map.grid[i][j])
+		{
+			if (game.map.grid[i][j] == 'W' || game.map.grid[i][j] == 'S'
+					|| game.map.grid[i][j] == 'E' || game.map.grid[i][j] == 'N')
+			{
+				game.player.pos_x = j * TILES + TILES / 2;
+				game.player.pos_y = i * TILES + TILES / 2;
+				if (game.map.grid[i][j] == 'W')
+					game.player.angle = WEST;
+				else if (game.map.grid[i][j] == 'E')
+					game.player.angle = EAST;
+				else if (game.map.grid[i][j] == 'N')
+					game.player.angle = NORTH;
+				else if (game.map.grid[i][j] == 'S')
+					game.player.angle = SOUTH;
+				printf("%f\n", game.player.angle);
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+
 	game.mlx_ptr = mlx_init();
 	if (!game.mlx_ptr)
 		return (EXIT_FAILURE);
@@ -144,8 +177,8 @@ int	main(void)
 	game.player.dir_y = sin(game.player.angle);
 	game.img = mlx_new_image(game.mlx_ptr, 1280, 720);
 	game.addr = mlx_get_data_addr(game.img, &game.bits_per_pixel, &game.line_length, &game.endian);
-	ft_draw_rays(&game);
 	ft_draw_map(&game);
+	ft_draw_rays(&game);
 	mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.img, 0, 0);
 	mlx_loop(game.mlx_ptr);
 	return (0);
