@@ -155,7 +155,7 @@ int	main(int ac, char **av)
 				else if (game.map.grid[i][j] == 'S')
 					game.player.angle = SOUTH;
 				printf("%f\n", game.player.angle);
-				break ;
+				break;
 			}
 			j++;
 		}
