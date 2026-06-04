@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:46:53 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/28 09:33:42 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/04 12:34:36 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 
 int	ft_click_cross(t_game *game)
 {
+	int	i;
+
+	i = 0;
+	if (game->map.grid)
+	{
+		while (game->map.grid[i])
+			free(game->map.grid[i++]);
+		free(game->map.grid);
+	}
+	if (game->map.no_tex_path)
+		free(game->map.no_tex_path);
+	if (game->map.so_tex_path)
+		free(game->map.so_tex_path);
+	if (game->map.we_tex_path)
+		free(game->map.we_tex_path);
+	if (game->map.ea_tex_path)
+		free(game->map.ea_tex_path);
+	if (game->map.raw_map)
+		ft_lstclear(&game->map.raw_map, free);
 	mlx_destroy_image(game->mlx_ptr, game->img);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	mlx_destroy_display(game->mlx_ptr);
@@ -147,13 +166,13 @@ int	main(int ac, char **av)
 				game.player.pos_x = j * TILES + TILES / 2;
 				game.player.pos_y = i * TILES + TILES / 2;
 				if (game.map.grid[i][j] == 'W')
-					game.player.angle = WEST;
+				{	game.player.angle = WEST; game.map.grid[i][j] = '0';}
 				else if (game.map.grid[i][j] == 'E')
-					game.player.angle = EAST;
+				{	game.player.angle = EAST; game.map.grid[i][j] = '0';}
 				else if (game.map.grid[i][j] == 'N')
-					game.player.angle = NORTH;
+				{	game.player.angle = NORTH; game.map.grid[i][j] = '0';}
 				else if (game.map.grid[i][j] == 'S')
-					game.player.angle = SOUTH;
+				{	game.player.angle = SOUTH; game.map.grid[i][j] = '0';}
 				printf("%f\n", game.player.angle);
 				break;
 			}

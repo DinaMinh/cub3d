@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:11:35 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/28 09:33:50 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/04 12:29:51 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,70 @@
 
 void	ft_down(t_game *game)
 {
-	game->player.pos_x -= game->player.dir_x * SPEED;
-	game->player.pos_y -= game->player.dir_y * SPEED;
+	int	x;
+	int	y;
+	int	xo;
+	int	yo;
+
+	x = game->player.pos_x / 64.0;
+	y = game->player.pos_y / 64.0;
+	xo = (game->player.pos_x - game->player.dir_x * SPEED) / 64;
+	yo = (game->player.pos_y - game->player.dir_y * SPEED)  / 64;
+	if (game->map.grid[y][xo] == '0')
+		game->player.pos_x -= game->player.dir_x * SPEED;
+	if (game->map.grid[yo][x] == '0')
+		game->player.pos_y -= game->player.dir_y * SPEED;
 }
 
 void	ft_up(t_game *game)
 {
-	game->player.pos_x += game->player.dir_x * SPEED;
-	game->player.pos_y += game->player.dir_y * SPEED;
+	int	x;
+	int	y;
+	int	xo;
+	int	yo;
+
+	x = game->player.pos_x / 64.0;
+	y = game->player.pos_y / 64.0;
+	xo = (game->player.pos_x + game->player.dir_x * SPEED) / 64;
+	yo = (game->player.pos_y + game->player.dir_y * SPEED)  / 64;
+	if (game->map.grid[y][xo] == '0')
+		game->player.pos_x += game->player.dir_x * SPEED;
+	if (game->map.grid[yo][x] == '0')
+		game->player.pos_y += game->player.dir_y * SPEED;
 }
 
 void	ft_left(t_game *game)
 {
-	game->player.pos_x += game->player.dir_y * SPEED;
-	game->player.pos_y -= game->player.dir_x * SPEED;
+	int	x;
+	int	y;
+	int	xo;
+	int	yo;
+
+	x = game->player.pos_x / 64.0;
+	y = game->player.pos_y / 64.0;
+	xo = (game->player.pos_x + game->player.dir_y * SPEED) / 64;
+	yo = (game->player.pos_y - game->player.dir_x * SPEED)  / 64;
+	if (game->map.grid[y][xo] == '0')
+		game->player.pos_x += game->player.dir_y * SPEED;
+	if (game->map.grid[yo][x] == '0')
+		game->player.pos_y -= game->player.dir_x * SPEED;
 }
 
 void	ft_right(t_game *game)
 {
-	game->player.pos_x -= game->player.dir_y * SPEED;
-	game->player.pos_y += game->player.dir_x * SPEED;
+	int	x;
+	int	y;
+	int	xo;
+	int	yo;
+
+	x = game->player.pos_x / 64.0;
+	y = game->player.pos_y / 64.0;
+	xo = (game->player.pos_x - game->player.dir_y * SPEED) / 64;
+	yo = (game->player.pos_y + game->player.dir_x * SPEED)  / 64;
+	if (game->map.grid[y][xo] == '0')
+		game->player.pos_x -= game->player.dir_y * SPEED;
+	if (game->map.grid[yo][x] == '0')
+		game->player.pos_y += game->player.dir_x * SPEED;
 }
 
 void	ft_movements(int keysym, t_game *game)
