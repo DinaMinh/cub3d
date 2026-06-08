@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:04:19 by dminh             #+#    #+#             */
-/*   Updated: 2026/05/28 09:40:44 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/08 10:15:08 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_check_hori(t_game *game)
 {
 	if (game->ray.angle == 0 || game->ray.angle == M_PI)
 	{
-		printf("y = %f\n", game->ray.y);
 		game->ray.x = game->player.pos_x;
 		game->ray.y = game->player.pos_y;
 		game->ray.dof = game->ray.max_dof;
@@ -48,13 +47,14 @@ void	ft_check_hori(t_game *game)
 
 void	ft_check_vert(t_game *game)
 {
-	if (fabs(game->ray.angle - PI2) < 0.0001 || fabs(game->ray.angle - PI3) < 0.0001)
+	if (fabs(game->ray.angle - M_PI / 2) < 0.0001
+			|| fabs(game->ray.angle - 3 * M_PI / 2) < 0.0001)
 	{
 		game->ray.x = game->player.pos_x;
 		game->ray.y = game->player.pos_y;
 		game->ray.dof = game->ray.max_dof;
 	}
-	else if (game->ray.angle > PI2 && game->ray.angle < PI3)
+	else if (game->ray.angle > M_PI / 2 && game->ray.angle < 3 * M_PI / 2)
 	{
 		game->ray.x = (((int)game->player.pos_x >> 6) << 6) - 0.0001;
 		game->ray.y = (game->player.pos_x - game->ray.x) * game->ray.n_tan
@@ -63,7 +63,7 @@ void	ft_check_vert(t_game *game)
 		game->ray.y_offset = -game->ray.x_offset * game->ray.n_tan;
 		
 	}
-	else if (game->ray.angle < PI2 || game->ray.angle > PI3)
+	else if (game->ray.angle < M_PI / 2 || game->ray.angle > 3 * M_PI / 2)
 	{
 		game->ray.x = (((int)game->player.pos_x >> 6) << 6) + TILES;
 		game->ray.y = (game->player.pos_x - game->ray.x) * game->ray.n_tan

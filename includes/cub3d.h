@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:47:31 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/04 12:29:00 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/08 16:12:18 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,39 @@
 # include "mlx.h"
 # include "libft.h"
 
+# define W_WIDTH 1280
+# define W_HEIGHT 720
+# define MS 1000
+# define FPS 60
+# define CENTER_X 50
+# define CENTER_Y 50
 # define TILES 64
 # define M_TILES 16
 # define M_SCALE 4
 # define PLAYER_W 2.5
-# define SPEED 5
+# define SPEED 3
+# define FOV 60
+
 # define YELLOW 0x00FFFF00
 # define RED 0x00CC3300
 # define WHITE 0x00FFFFFF
 # define PURPLE 0x00666699
 # define PINK 0x00FF66FF
-# define PI2 M_PI / 2
-# define PI3 3 * M_PI / 2
-# define DR 0.0174533
+# define DARKPINK 0x00CC0099
+
 # define MASSIVE 1000000
 # define NORTH 4.712
 # define SOUTH 1.571
 # define WEST M_PI
 # define EAST 0
 
-extern char	map[6][11];
+# define HORIZONTAL true
+# define VERTICAL false
 
 typedef struct s_ray
 {
+	float	stored_x[W_WIDTH];
+	float	stored_y[W_WIDTH];
 	float	x;
 	float	y;
 	float	hx;
@@ -64,12 +74,28 @@ typedef struct s_ray
 	float	n_tan;
 	float	line_h;
 	float	line_o;
+	float	fov;
+	float	angle_step;
+	float	step_x;
+	float	step_y;
+	bool	hit_side;
+	int		color;
 	int		r;
 	int		mx;
 	int		my;
 	int		dof;
 	int		max_dof;
 }	t_ray;
+
+typedef enum	e_keys
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	L_ARROW,
+	R_ARROW,
+} t_keys;
 
 typedef struct s_player
 {
@@ -98,22 +124,46 @@ typedef struct s_map
 	int		empty_line_seen;
 }	t_map;
 
+typedef struct	s_textures
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}	t_textures;
+
 typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img;
+	int			key[6];
 	char		*addr;
+	float		screen_x;
+	float		screen_y;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
 	t_player	player;
 	t_map		map;
 	t_ray		ray;
+	t_textures	north;
+	t_textures	south;
+	t_textures	west;
+	t_textures	east;
+
 }	t_game;
 
 int		ft_input(int keysym, t_game *game);
-void	ft_movements(int keysym, t_game *game);
+int		ft_release(int keysym, t_game *game);
+int		ft_click_cross(t_game *game);
+int		ft_game_hook(t_game *game);
+void	ft_key_press(int keysym, t_game *game);
+void	ft_key_release(int keysym, t_game *game);
+void	ft_movements(t_game *game);
+void	ft_starting_orientation(t_game *game);
+void	ft_game(t_game *game);
 void	ft_draw_map(t_game *game);
 void	ft_draw_angle(t_game *game);
 void	ft_draw_square(t_game *game, int x, int y, int width);
@@ -147,7 +197,10 @@ int		build_final_map(t_map *map);
 int		is_floor_or_player(char c);
 int		check_neighbors(t_map *map, int y, int x);
 int		validate_map_walls(t_map *map);
+unsigned int	ft_pixel_color(t_textures *texture, int x, int y);
 void	print_map_struct(t_map *map, char *step);
 void	print_map_grid(t_map *map);
+void	ft_draw_minimap_rays(t_game *game);
+void	ft_pixel_put_map(t_game *game, int x, int y, int color);
 
 #endif

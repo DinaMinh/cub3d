@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:11:35 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/04 12:29:51 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/08 13:33:04 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,50 @@ void	ft_right(t_game *game)
 		game->player.pos_y += game->player.dir_x * SPEED;
 }
 
-void	ft_movements(int keysym, t_game *game)
+void	ft_movements(t_game *game)
 {
-	ft_memset(game->addr, 0, 720 * game->line_length);
-	game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel, \
-			&game->line_length, &game->endian);
-	if (keysym == XK_S || keysym == XK_s)
-		ft_down(game);
-	else if (keysym == XK_W || keysym == XK_w)
+	if (game->key[UP] == 1)
 		ft_up(game);
-	else if (keysym == XK_A || keysym == XK_a)
+	if (game->key[DOWN] == 1)
+		ft_down(game);
+	if (game->key[LEFT] == 1)
 		ft_left(game);
-	else if (keysym == XK_D || keysym == XK_d)
+	if (game->key[RIGHT] == 1)
 		ft_right(game);
-	else if (keysym == XK_Left || keysym == XK_Right)
-		ft_camera(keysym, game);
-	ft_draw_map(game);
-	ft_draw_rays(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
+	if (game->key[L_ARROW] == 1)
+		ft_camera(XK_Left, game);
+	if (game->key[R_ARROW] == 1)
+		ft_camera(XK_Right, game);
+}
+
+void	ft_key_press(int keysym, t_game *game)
+{
+	if (keysym == XK_W || keysym == XK_w)
+		game->key[UP] = 1;
+	else if (keysym == XK_S || keysym == XK_s)
+		game->key[DOWN] = 1;
+	else if (keysym == XK_A || keysym == XK_a)
+		game->key[LEFT] = 1;
+	else if (keysym == XK_D || keysym == XK_d)
+		game->key[RIGHT] = 1;
+	else if (keysym == XK_Left)
+		game->key[L_ARROW] = 1;
+	else if (keysym == XK_Right)
+		game->key[R_ARROW] = 1;
+}
+
+void	ft_key_release(int keysym, t_game *game)
+{
+	if (keysym == XK_W || keysym == XK_w)
+		game->key[UP] = 0;
+	else if (keysym == XK_S || keysym == XK_s)
+		game->key[DOWN] = 0;
+	else if (keysym == XK_A || keysym == XK_a)
+		game->key[LEFT] = 0;
+	else if (keysym == XK_D || keysym == XK_d)
+		game->key[RIGHT] = 0;
+	else if (keysym == XK_Left)
+		game->key[L_ARROW] = 0;
+	else if (keysym == XK_Right)
+		game->key[R_ARROW] = 0;
 }
