@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:59:27 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/09 11:15:48 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/09 12:23:54 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_raycasting(t_game *game)
 	float	tex_y;
 	int		tex_x;
 
-	step = 32.0 / game->ray.line_h;
+	step = TILES / 2.0 / game->ray.line_h;
 	tex_y = 0;
 	if (game->ray.hit_side == VERTICAL)
 	{
