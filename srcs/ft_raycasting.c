@@ -51,7 +51,7 @@ void	ft_raycasting(t_game *game)
 	float	tex_y;
 	int		tex_x;
 
-	step = TILES / 2.0 / game->ray.line_h;
+	step = (float)TILES / game->ray.line_h;
 	tex_y = 0;
 	if (game->ray.hit_side == VERTICAL)
 	{
@@ -59,7 +59,7 @@ void	ft_raycasting(t_game *game)
 			game->curr_tex = &game->west;
 		else
 			game->curr_tex = &game->east;
-		tex_x = (int)game->ray.y % (TILES / 2);
+		tex_x = (int)game->ray.y % (TILES);
 	}
 	else if (game->ray.hit_side == HORIZONTAL)
 	{
@@ -67,7 +67,7 @@ void	ft_raycasting(t_game *game)
 			game->curr_tex = &game->north;
 		else
 			game->curr_tex = &game->south;
-		tex_x = (int)game->ray.x % (TILES / 2);
+		tex_x = (int)game->ray.x % (TILES);
 	}
 	ft_draw_walls(game, tex_x, tex_y, step);
 }
