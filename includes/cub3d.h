@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:47:31 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/08 16:12:18 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/09 11:03:05 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_game
 	t_player	player;
 	t_map		map;
 	t_ray		ray;
+	t_textures	*curr_tex;
 	t_textures	north;
 	t_textures	south;
 	t_textures	west;
@@ -155,52 +156,60 @@ typedef struct s_game
 
 }	t_game;
 
-int		ft_input(int keysym, t_game *game);
-int		ft_release(int keysym, t_game *game);
-int		ft_click_cross(t_game *game);
-int		ft_game_hook(t_game *game);
-void	ft_key_press(int keysym, t_game *game);
-void	ft_key_release(int keysym, t_game *game);
-void	ft_movements(t_game *game);
-void	ft_starting_orientation(t_game *game);
-void	ft_game(t_game *game);
-void	ft_draw_map(t_game *game);
-void	ft_draw_angle(t_game *game);
-void	ft_draw_square(t_game *game, int x, int y, int width);
-void	ft_camera(int keysym, t_game *game);
-void	ft_pixel_put(t_game *game, int x, int y, int color);
-void	ft_draw_rays(t_game *game);
-float	ft_dist(t_game *game, float x, float y);
-void	ft_check_hori(t_game *game);
-void	ft_check_vert(t_game *game);
-void	ft_check_hori_ray(t_game *game);
-void	ft_check_vert_ray(t_game *game);
-void	init_map_struct(t_map *map);
-int		check_extension(char *filename, char *ext);
-void	skip_spaces(char *line, int *i);
-int		route_line(char *line, t_map *map);
-int		is_texture(char *str);
-int		is_color(char *str);
-int		is_empty_or_whitespace(char *str);
-int		process_lines(int fd, t_map *map);
-char	*get_valid_path(char *str);
-int		parse_texture(char *line, t_map *map);
-int		parse_cub(char *filename, t_map *map);
-int		parse_rgb(char **rgb);
-int		parse_color(char *line, t_map *map);
-int		all_elements_loaded(t_map *map);
-char	*dup_without_newline(char *line);
-int		parse_map_line(char *line, t_map *map);
-int		get_max_width(t_list *raw_map);
-char	*pad_line(char *raw_line, int max_width);
-int		build_final_map(t_map *map);
-int		is_floor_or_player(char c);
-int		check_neighbors(t_map *map, int y, int x);
-int		validate_map_walls(t_map *map);
 unsigned int	ft_pixel_color(t_textures *texture, int x, int y);
-void	print_map_struct(t_map *map, char *step);
-void	print_map_grid(t_map *map);
-void	ft_draw_minimap_rays(t_game *game);
-void	ft_pixel_put_map(t_game *game, int x, int y, int color);
+long long		ft_get_time(void);
+int				ft_input(int keysym, t_game *game);
+int				ft_release(int keysym, t_game *game);
+int				ft_click_cross(t_game *game);
+int				ft_game_hook(t_game *game);
+int				ft_clean_exit(t_game *game);
+int				ft_game_hook(t_game *game);
+void			ft_init_texture(t_game *game);
+void			ft_pixel_put(t_game *game, int x, int y, int color);
+void			ft_pixel_put_map(t_game *game, int x, int y, int color);
+void			ft_get_delta(t_game *game, int x, int y);
+void			ft_key_press(int keysym, t_game *game);
+void			ft_key_release(int keysym, t_game *game);
+void			ft_movements(t_game *game);
+void			ft_starting_orientation(t_game *game);
+void			ft_game(t_game *game);
+void			ft_draw_map(t_game *game);
+void			ft_draw_angle(t_game *game);
+void			ft_draw_line(t_game *game);
+void			ft_draw_walls(t_game *game, int tex_x, float tex_y, float step);
+void			ft_draw_minimap_rays(t_game *game);
+void			ft_get_fov(t_game *game);
+void			ft_camera(int keysym, t_game *game);
+void			ft_draw_rays(t_game *game);
+float			ft_dist(t_game *game, float x, float y);
+void			ft_check_hori(t_game *game);
+void			ft_check_vert(t_game *game);
+void			ft_check_hori_ray(t_game *game);
+void			ft_check_vert_ray(t_game *game);
+void			init_map_struct(t_map *map);
+int				check_extension(char *filename, char *ext);
+void			skip_spaces(char *line, int *i);
+int				route_line(char *line, t_map *map);
+int				is_texture(char *str);
+int				is_color(char *str);
+int				is_empty_or_whitespace(char *str);
+int				process_lines(int fd, t_map *map);
+char			*get_valid_path(char *str);
+int				parse_texture(char *line, t_map *map);
+int				parse_cub(char *filename, t_map *map);
+int				parse_rgb(char **rgb);
+int				parse_color(char *line, t_map *map);
+int				all_elements_loaded(t_map *map);
+char			*dup_without_newline(char *line);
+int				parse_map_line(char *line, t_map *map);
+int				get_max_width(t_list *raw_map);
+char			*pad_line(char *raw_line, int max_width);
+int				build_final_map(t_map *map);
+int				is_floor_or_player(char c);
+int				check_neighbors(t_map *map, int y, int x);
+int				validate_map_walls(t_map *map);
+void			print_map_struct(t_map *map, char *step);
+void			print_map_grid(t_map *map);
+void			ft_draw_minimap_rays(t_game *game);
 
 #endif

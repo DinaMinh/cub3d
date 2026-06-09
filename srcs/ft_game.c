@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 16:06:32 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/08 16:37:45 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/09 10:54:42 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,22 @@ void	ft_starting_orientation(t_game *game)
 	}
 }
 
-void	ft_init_texture(t_game *game)
+int	ft_game_hook(t_game *game)
 {
-	int	width = 32;
-	int	height = 32;
-	game->west.img = mlx_xpm_file_to_image(game->mlx_ptr, game->map.we_tex_path, &width, &height);
-	game->west.addr = mlx_get_data_addr(game->west.img, &game->west.bits_per_pixel, &game->west.line_length, &game->west.endian);
-}
+	static long long	last_frame = 0;
+	long long			current_frame;
 
-unsigned int	ft_pixel_color(t_textures *texture, int x, int y)
-{
-	char	*dst;
-
-	dst = texture->addr + (y * texture->line_length
-			+ x * (texture->bits_per_pixel / 8));
-	return (*(unsigned int *)dst);
+	current_frame = ft_get_time();
+	if (current_frame - last_frame >= MS / FPS)
+	{
+		last_frame = current_frame;
+		ft_memset(game->addr, 0, W_HEIGHT * game->line_length);
+		ft_movements(game);
+	}
+	ft_draw_rays(game);
+	ft_draw_map(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
+	return (0);
 }
 
 void	ft_game(t_game *game)

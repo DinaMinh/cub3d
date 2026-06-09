@@ -1,0 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_game_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/09 10:54:19 by dminh             #+#    #+#             */
+/*   Updated: 2026/06/09 10:54:33 by dminh            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+long long	ft_get_time(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + (tv.tv_usec / 1000));
+}
+
+void	ft_init_texture(t_game *game)
+{
+	int	width = 32;
+	int	height = 32;
+	game->north.img = mlx_xpm_file_to_image(game->mlx_ptr, game->map.no_tex_path, &width, &height);
+	game->south.img = mlx_xpm_file_to_image(game->mlx_ptr, game->map.so_tex_path, &width, &height);
+	game->west.img = mlx_xpm_file_to_image(game->mlx_ptr, game->map.we_tex_path, &width, &height);
+	game->east.img = mlx_xpm_file_to_image(game->mlx_ptr, game->map.ea_tex_path, &width, &height);
+	if (!game->north.img || !game->south.img || !game->west.img || !game->east.img)
+		ft_clean_exit(game);
+	game->north.addr = mlx_get_data_addr(game->north.img, &game->north.bits_per_pixel, &game->north.line_length, &game->north.endian);
+	game->south.addr = mlx_get_data_addr(game->south.img, &game->south.bits_per_pixel, &game->south.line_length, &game->south.endian);
+	game->west.addr = mlx_get_data_addr(game->west.img, &game->west.bits_per_pixel, &game->west.line_length, &game->west.endian);
+	game->east.addr = mlx_get_data_addr(game->east.img, &game->east.bits_per_pixel, &game->east.line_length, &game->east.endian);
+}
+
+unsigned int	ft_pixel_color(t_textures *texture, int x, int y)
+{
+	char	*dst;
+
+	dst = texture->addr + (y * texture->line_length
+			+ x * (texture->bits_per_pixel / 8));
+	return (*(unsigned int *)dst);
+}
+
+void	ft_get_fov(t_game *game)
+{
+	game->ray.fov = FOV * (M_PI / 180.0);
+	game->ray.angle_step = game->ray.fov / W_WIDTH;
+}
