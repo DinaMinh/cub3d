@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:47:31 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/10 11:12:47 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/10 20:53:53 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ typedef struct s_game
 	t_textures	south;
 	t_textures	west;
 	t_textures	east;
+	t_textures	sword;
 
 }	t_game;
 

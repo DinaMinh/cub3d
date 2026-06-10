@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:59:27 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/10 10:10:07 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/10 21:20:41 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,64 @@ static void	ft_check_closest_ray(t_game *game)
 	}
 }
 
+unsigned int	ft_weapon_color(t_textures *texture, int x, int y)
+{
+	char	*dst;
+
+	// FIX: Prevent negative coordinates
+	if (x < 0)
+		x = 0;
+	if (y < 0)
+		y = 0;
+		
+	// FIX: Prevent coordinates exceeding the texture width/height
+	if (x >= TILES / 2)
+		x = TILES/2 - 1;
+	if (y >= TILES / 2)
+		y = TILES/2  - 1;
+	dst = texture->addr + (y * texture->line_length
+			+ x * (texture->bits_per_pixel / 8));
+	return (*(unsigned int *)dst);
+}
+
+void ft_draw_weapon(t_game *game)
+{
+	int x;
+	int y;
+	int tex_x;
+	int tex_y;
+	unsigned int color;
+
+	// Set how many times bigger the sword should be.
+	// E.g., if sprite is 64x64, a scale of 5 makes it 320x320 on screen.
+	int scale = 18;
+
+	// Position it in the bottom right corner
+	// X: Screen width - scaled sword width - 50px padding from the right edge
+	// Y: Screen height - scaled sword height (flush with the bottom)
+	int	size = TILES / 2;
+	int start_x = W_WIDTH - (size* scale) - 50;
+	int start_y = W_HEIGHT - (size * scale);
+
+	y = 0;
+	while (y < size* scale)
+	{
+		x = 0;
+		while (x < size * scale)
+		{
+			// Map the scaled screen pixel back to the original texture pixel
+			tex_x = x / scale;
+			tex_y = y / scale;
+			color = ft_weapon_color(&game->sword, tex_x, tex_y);
+			if (color != 0x000000 && color != 0xFF000000)
+				ft_pixel_put(game, start_x + x, start_y + y, color);
+			x++;
+		}
+		y++;
+	}
+	printf("OK\n");
+}
+
 void	ft_raycasting(t_game *game)
 {
 	float	step;
@@ -56,18 +114,29 @@ void	ft_raycasting(t_game *game)
 	if (game->ray.hit_side == VERTICAL)
 	{
 		if (game->ray.angle > M_PI / 2 && game->ray.angle < 3 * M_PI / 2)
-			game->curr_tex = &game->west;
-		else
+		{
 			game->curr_tex = &game->east;
-		tex_x = (int)game->ray.y % (TILES);
+			tex_x = (TILES - 1) - ((int)game->ray.y % (TILES));
+		}
+		else
+		{
+			game->curr_tex = &game->west;
+			tex_x = (int)game->ray.y % (TILES);
+		}
 	}
 	else if (game->ray.hit_side == HORIZONTAL)
 	{
 		if (game->ray.angle > M_PI)
-			game->curr_tex = &game->north;
-		else
+		{
 			game->curr_tex = &game->south;
-		tex_x = (int)game->ray.x % (TILES);
+			tex_x = (int)game->ray.x % (TILES);
+		}
+		else
+		{
+			game->curr_tex = &game->north;
+			tex_x = (TILES - 1) - ((int)game->ray.x % (TILES));
+		}
+
 	}
 	ft_draw_walls(game, tex_x, tex_y, step);
 }
@@ -109,4 +178,5 @@ void	ft_draw_rays(t_game *game)
 	else if (game->ray.angle > 2 * M_PI)
 		game->ray.angle -= 2 * M_PI;
 	ft_raycasting_loop(game);
+	ft_draw_weapon(game);
 }

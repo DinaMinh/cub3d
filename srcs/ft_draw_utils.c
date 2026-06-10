@@ -16,7 +16,7 @@ void	ft_pixel_put(t_game *game, int x, int y, int color)
 {
 	char	*dst;
 
-	if (y < 0 || y > W_HEIGHT || x < 0 || x > W_WIDTH)
+	if (y < 0 || y >= W_HEIGHT || x < 0 || x >= W_WIDTH)
 		return ;
 	dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
