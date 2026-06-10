@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 10:45:17 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/09 10:50:23 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/10 10:03:10 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ void	ft_draw_map(t_game *game)
 	int	color;
 
 	y = 0;
+	ft_get_delta(game);
 	while (game->map.grid[y])
 	{
 		x = 0;
 		while (game->map.grid[y][x])
 		{
-			ft_get_delta(game, x, y);
+			game->screen_x = game->delta_x + x * M_TILES;
+			game->screen_y = game->delta_y + y * M_TILES;
 			if (game->map.grid[y][x] == '1')
 				color = WHITE;
 			else if (game->map.grid[y][x] == '0')

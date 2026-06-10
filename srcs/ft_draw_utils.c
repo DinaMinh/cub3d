@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 10:48:11 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/09 10:50:48 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/10 09:59:12 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,10 @@ void	ft_pixel_put_map(t_game *game, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	ft_get_delta(t_game *game, int x, int y)
+void	ft_get_delta(t_game *game)
 {
-	int	delta_x;
-	int	delta_y;
-
-	delta_x = x * TILES - game->player.pos_x;
-	delta_y = y * TILES - game->player.pos_y;
-	game->screen_x = CENTER_X + (delta_x / M_SCALE);
-	game->screen_y = CENTER_Y + (delta_y / M_SCALE);
+	game->delta_x = CENTER_X - game->player.pos_x / M_SCALE;
+	game->delta_y = CENTER_Y - game->player.pos_y / M_SCALE;
 }
 
 void	ft_draw_minimap_rays(t_game *game)

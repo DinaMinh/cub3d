@@ -61,6 +61,27 @@ void	ft_starting_orientation(t_game *game)
 	}
 }
 
+void	ft_draw_background(t_game *game)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < W_HEIGHT)
+	{
+		x = 0;
+		while (x < W_WIDTH)
+		{
+			if (y < W_HEIGHT / 2)
+				ft_pixel_put(game, x, y, game->map.ceiling_color);
+			else
+				ft_pixel_put(game, x, y, game->map.floor_color);
+			x++;
+		}
+		y++;
+	}
+}
+
 int	ft_game_hook(t_game *game)
 {
 	static long long	last_frame = 0;
@@ -70,9 +91,10 @@ int	ft_game_hook(t_game *game)
 	if (current_frame - last_frame >= MS / FPS)
 	{
 		last_frame = current_frame;
-		ft_memset(game->addr, 0, W_HEIGHT * game->line_length);
+		ft_draw_background(game);
 		ft_movements(game);
 	}
+	
 	ft_draw_rays(game);
 	ft_draw_map(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);

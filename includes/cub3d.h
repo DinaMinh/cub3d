@@ -35,7 +35,7 @@
 # define M_TILES 16
 # define M_SCALE 4
 # define PLAYER_W 2.5
-# define SPEED 3
+# define SPEED 4
 # define FOV 60
 
 # define YELLOW 0x00FFFF00
@@ -142,6 +142,8 @@ typedef struct s_game
 	char		*addr;
 	float		screen_x;
 	float		screen_y;
+	int			delta_x;
+	int			delta_y;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
@@ -167,7 +169,7 @@ int				ft_game_hook(t_game *game);
 void			ft_init_texture(t_game *game);
 void			ft_pixel_put(t_game *game, int x, int y, int color);
 void			ft_pixel_put_map(t_game *game, int x, int y, int color);
-void			ft_get_delta(t_game *game, int x, int y);
+void			ft_get_delta(t_game *game);
 void			ft_key_press(int keysym, t_game *game);
 void			ft_key_release(int keysym, t_game *game);
 void			ft_movements(t_game *game);
@@ -178,6 +180,7 @@ void			ft_draw_angle(t_game *game);
 void			ft_draw_line(t_game *game);
 void			ft_draw_walls(t_game *game, int tex_x, float tex_y, float step);
 void			ft_draw_minimap_rays(t_game *game);
+void			ft_draw_floor(t_game *game);
 void			ft_get_fov(t_game *game);
 void			ft_camera(int keysym, t_game *game);
 void			ft_draw_rays(t_game *game);
