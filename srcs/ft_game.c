@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 16:06:32 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/09 10:54:42 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/10 11:14:02 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,12 @@ void	ft_game(t_game *game)
 		mlx_destroy_display(game->mlx_ptr);
 		exit(EXIT_FAILURE);
 	}
+	ft_initial_mouse_pos(game);
 	ft_init_texture(game);
 	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask, (int (*)())(void(*)(void))ft_click_cross, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, (int (*)())(void(*)(void))ft_input, game);
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask, (int (*)())(void(*)(void))ft_key_release, game);
+	mlx_hook(game->win_ptr, MotionNotify, PointerMotionMask, (int (*)())(void(*)(void))ft_mouse, game);
 	game->player.dir_x = cos(game->player.angle);
 	game->player.dir_y = sin(game->player.angle);
 	game->img = mlx_new_image(game->mlx_ptr, W_WIDTH, W_HEIGHT);

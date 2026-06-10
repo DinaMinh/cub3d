@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:47:31 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/09 11:03:05 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/10 11:12:47 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define M_SCALE 4
 # define PLAYER_W 2.5
 # define SPEED 4
+# define MOUSE_ROTATION 0.001
 # define FOV 60
 
 # define YELLOW 0x00FFFF00
@@ -104,8 +105,8 @@ typedef struct s_player
 	float	dir_x;
 	float	dir_y;
 	float	angle;
-	//float	plane_x;
-	//float	plane_y;
+	int		mouse_x;
+	int		mouse_y;
 }	t_player;
 
 typedef struct s_map
@@ -214,5 +215,7 @@ int				validate_map_walls(t_map *map);
 void			print_map_struct(t_map *map, char *step);
 void			print_map_grid(t_map *map);
 void			ft_draw_minimap_rays(t_game *game);
+void			ft_initial_mouse_pos(t_game *game);
+int				ft_mouse(int x, int y, t_game *game);
 
 #endif
