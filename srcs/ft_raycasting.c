@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 11:59:27 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/10 21:20:41 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/11 11:39:22 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ unsigned int	ft_weapon_color(t_textures *texture, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
-void ft_draw_weapon(t_game *game)
+void ft_draw_weapon(t_game *game, t_textures *sword)
 {
 	int x;
 	int y;
@@ -73,15 +73,10 @@ void ft_draw_weapon(t_game *game)
 	int tex_y;
 	unsigned int color;
 
-	// Set how many times bigger the sword should be.
-	// E.g., if sprite is 64x64, a scale of 5 makes it 320x320 on screen.
-	int scale = 18;
+	int scale = 20;
 
-	// Position it in the bottom right corner
-	// X: Screen width - scaled sword width - 50px padding from the right edge
-	// Y: Screen height - scaled sword height (flush with the bottom)
 	int	size = TILES / 2;
-	int start_x = W_WIDTH - (size* scale) - 50;
+	int start_x = W_WIDTH - (size* scale) - 150;
 	int start_y = W_HEIGHT - (size * scale);
 
 	y = 0;
@@ -90,17 +85,20 @@ void ft_draw_weapon(t_game *game)
 		x = 0;
 		while (x < size * scale)
 		{
-			// Map the scaled screen pixel back to the original texture pixel
 			tex_x = x / scale;
 			tex_y = y / scale;
-			color = ft_weapon_color(&game->sword, tex_x, tex_y);
+			color = ft_weapon_color(sword, tex_x, tex_y);
 			if (color != 0x000000 && color != 0xFF000000)
 				ft_pixel_put(game, start_x + x, start_y + y, color);
 			x++;
 		}
 		y++;
 	}
-	printf("OK\n");
+}
+
+void	ft_sword_animation(t_game *game)
+{
+	(void)game;
 }
 
 void	ft_raycasting(t_game *game)
@@ -133,7 +131,7 @@ void	ft_raycasting(t_game *game)
 		}
 		else
 		{
-			game->curr_tex = &game->north;
+			game->curr_tex = &game->door;
 			tex_x = (TILES - 1) - ((int)game->ray.x % (TILES));
 		}
 
@@ -178,5 +176,4 @@ void	ft_draw_rays(t_game *game)
 	else if (game->ray.angle > 2 * M_PI)
 		game->ray.angle -= 2 * M_PI;
 	ft_raycasting_loop(game);
-	ft_draw_weapon(game);
 }

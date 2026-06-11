@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 10:54:19 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/09 10:54:33 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/11 12:28:19 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,23 @@ void	ft_init_texture(t_game *game)
 	game->south.img = mlx_xpm_file_to_image(game->mlx_ptr, game->map.so_tex_path, &width, &height);
 	game->west.img = mlx_xpm_file_to_image(game->mlx_ptr, game->map.we_tex_path, &width, &height);
 	game->east.img = mlx_xpm_file_to_image(game->mlx_ptr, game->map.ea_tex_path, &width, &height);
+	game->door.img = mlx_xpm_file_to_image(game->mlx_ptr, "./texture/door.xpm", &width, &height);
 	width /= 2;
 	height /= 2;
 	game->sword.img = mlx_xpm_file_to_image(game->mlx_ptr, "./texture/sword.xpm", &width, &height);
+	game->sword2.img = mlx_xpm_file_to_image(game->mlx_ptr, "./texture/sword_hit1.xpm", &width, &height);
+	game->sword3.img = mlx_xpm_file_to_image(game->mlx_ptr, "./texture/sword_hit2.xpm", &width, &height);
 	if (!game->north.img || !game->south.img || !game->west.img || !game->east.img
-			|| !game->sword.img)
+			|| !game->sword.img || !game->sword2.img || !game->sword3.img)
 		ft_clean_exit(game);
 	game->north.addr = mlx_get_data_addr(game->north.img, &game->north.bits_per_pixel, &game->north.line_length, &game->north.endian);
 	game->south.addr = mlx_get_data_addr(game->south.img, &game->south.bits_per_pixel, &game->south.line_length, &game->south.endian);
 	game->west.addr = mlx_get_data_addr(game->west.img, &game->west.bits_per_pixel, &game->west.line_length, &game->west.endian);
 	game->east.addr = mlx_get_data_addr(game->east.img, &game->east.bits_per_pixel, &game->east.line_length, &game->east.endian);
 	game->sword.addr = mlx_get_data_addr(game->sword.img, &game->sword.bits_per_pixel, &game->sword.line_length, &game->sword.endian);
+	game->sword2.addr = mlx_get_data_addr(game->sword2.img, &game->sword2.bits_per_pixel, &game->sword2.line_length, &game->sword2.endian);
+	game->sword3.addr = mlx_get_data_addr(game->sword3.img, &game->sword3.bits_per_pixel, &game->sword3.line_length, &game->sword3.endian);
+	game->door.addr = mlx_get_data_addr(game->door.img, &game->door.bits_per_pixel, &game->door.line_length, &game->door.endian);
 }
 
 unsigned int	ft_pixel_color(t_textures *texture, int x, int y)

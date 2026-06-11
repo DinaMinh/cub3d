@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 16:06:32 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/10 11:14:02 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/11 11:36:00 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,22 @@ int	ft_game_hook(t_game *game)
 	}
 	
 	ft_draw_rays(game);
+	if (game->key[E] == 1)
+	{
+		if (game->attack_start == 0)
+			game->attack_start = ft_get_time();
+		if (current_frame - game->attack_start <= 100)
+			ft_draw_weapon(game, &game->sword2);
+		else if (current_frame - game->attack_start > 100 && current_frame - game->attack_start <= 200)
+			ft_draw_weapon(game, &game->sword3);
+		else
+		{
+			game->attack_start = 0;
+			game->key[E] = 0;
+		}
+	}
+	else
+		ft_draw_weapon(game, &game->sword);
 	ft_draw_map(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
 	return (0);

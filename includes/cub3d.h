@@ -96,6 +96,7 @@ typedef enum	e_keys
 	RIGHT,
 	L_ARROW,
 	R_ARROW,
+	E,
 } t_keys;
 
 typedef struct s_player
@@ -139,8 +140,9 @@ typedef struct s_game
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img;
-	int			key[6];
+	int			key[7];
 	char		*addr;
+	long long	attack_start;
 	float		screen_x;
 	float		screen_y;
 	int			delta_x;
@@ -156,7 +158,10 @@ typedef struct s_game
 	t_textures	south;
 	t_textures	west;
 	t_textures	east;
+	t_textures	door;
 	t_textures	sword;
+	t_textures	sword2;
+	t_textures	sword3;
 
 }	t_game;
 
@@ -217,6 +222,9 @@ void			print_map_struct(t_map *map, char *step);
 void			print_map_grid(t_map *map);
 void			ft_draw_minimap_rays(t_game *game);
 void			ft_initial_mouse_pos(t_game *game);
+void			ft_sword_animation(t_game *game);
+unsigned int	ft_weapon_color(t_textures *texture, int x, int y);
+void			ft_draw_weapon(t_game *game, t_textures *sword);
 int				ft_mouse(int x, int y, t_game *game);
 
 #endif
