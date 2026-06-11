@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:47:31 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/10 20:53:53 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/11 13:26:49 by ebourdet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ typedef struct s_map
 	int		empty_line_seen;
 }	t_map;
 
-typedef struct	s_textures
+typedef struct s_textures
 {
 	void		*img;
 	char		*addr;
@@ -158,13 +158,45 @@ typedef struct s_game
 	t_textures	south;
 	t_textures	west;
 	t_textures	east;
-	t_textures	door;
-	t_textures	sword;
-	t_textures	sword2;
+	t_anim		door;
+	t_anim		sword;
 	t_textures	sword3;
 
 }	t_game;
 
+typedef struct s_anim
+{
+	t_textures	frame1;
+	t_textures	frame2;
+}	t_anim;
+
+/*==================PARSING==================*/
+
+void			init_map_struct(t_map *map);
+int				check_extension(char *filename, char *ext);
+void			skip_spaces(char *line, int *i);
+int				route_line(char *line, t_map *map);
+int				is_texture(char *str);
+int				is_color(char *str);
+int				is_empty_or_whitespace(char *str);
+int				process_lines(int fd, t_map *map);
+char			*get_valid_path(char *str);
+int				parse_texture(char *line, t_map *map);
+int				parse_cub(char *filename, t_map *map);
+int				parse_rgb(char **rgb);
+int				parse_color(char *line, t_map *map);
+int				all_elements_loaded(t_map *map);
+char			*dup_without_newline(char *line);
+int				parse_map_line(char *line, t_map *map);
+int				get_max_width(t_list *raw_map);
+char			*pad_line(char *raw_line, int max_width);
+int				build_final_map(t_map *map);
+int				is_floor_or_player(char c);
+int				check_neighbors(t_map *map, int y, int x);
+int				validate_map_walls(t_map *map);
+void			free_tab(char **tab);
+
+/*=======================*/
 unsigned int	ft_pixel_color(t_textures *texture, int x, int y);
 long long		ft_get_time(void);
 int				ft_input(int keysym, t_game *game);
@@ -196,30 +228,6 @@ void			ft_check_hori(t_game *game);
 void			ft_check_vert(t_game *game);
 void			ft_check_hori_ray(t_game *game);
 void			ft_check_vert_ray(t_game *game);
-void			init_map_struct(t_map *map);
-int				check_extension(char *filename, char *ext);
-void			skip_spaces(char *line, int *i);
-int				route_line(char *line, t_map *map);
-int				is_texture(char *str);
-int				is_color(char *str);
-int				is_empty_or_whitespace(char *str);
-int				process_lines(int fd, t_map *map);
-char			*get_valid_path(char *str);
-int				parse_texture(char *line, t_map *map);
-int				parse_cub(char *filename, t_map *map);
-int				parse_rgb(char **rgb);
-int				parse_color(char *line, t_map *map);
-int				all_elements_loaded(t_map *map);
-char			*dup_without_newline(char *line);
-int				parse_map_line(char *line, t_map *map);
-int				get_max_width(t_list *raw_map);
-char			*pad_line(char *raw_line, int max_width);
-int				build_final_map(t_map *map);
-int				is_floor_or_player(char c);
-int				check_neighbors(t_map *map, int y, int x);
-int				validate_map_walls(t_map *map);
-void			print_map_struct(t_map *map, char *step);
-void			print_map_grid(t_map *map);
 void			ft_draw_minimap_rays(t_game *game);
 void			ft_initial_mouse_pos(t_game *game);
 void			ft_sword_animation(t_game *game);

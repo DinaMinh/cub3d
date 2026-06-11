@@ -12,8 +12,9 @@ MLX := $(MLX_DIR)libmlx.a
 CFLAGS := -Wall -Wextra -Werror -I$(INCLUDES) -I$(LIBFT_INCLUDES) -I$(MLX_INCLUDES)
 
 SRCS := main.c ft_input.c ft_movements.c ft_camera.c ft_raycasting.c \
-		ft_raycasting_utils.c parsing.c ft_game.c ft_clean_exit.c \
-		ft_draw.c ft_draw_utils.c ft_game_utils.c ft_mouse.c
+		ft_raycasting_utils.c utils.c ft_game.c ft_clean_exit.c \
+		ft_draw.c ft_draw_utils.c ft_game_utils.c ft_mouse.c \
+		check_map.c, init_map.c padding.c parse_ct.c
 
 SRC_DIR := ./srcs/
 
