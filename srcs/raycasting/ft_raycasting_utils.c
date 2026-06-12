@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:04:19 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/08 10:15:08 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/12 12:23:21 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 float	ft_dist(t_game *game, float x, float y)
 {
-	return (sqrt((x - game->player.pos_x) * (x - game->player.pos_x) \
-				+ (y - game->player.pos_y) * (y - game->player.pos_y)));
+	return (sqrt((x - game->player.pos_x) * (x - game->player.pos_x)
+			+ (y - game->player.pos_y) * (y - game->player.pos_y)));
 }
 
 void	ft_check_hori(t_game *game)
 {
-	if (game->ray.angle == 0 || game->ray.angle == M_PI)
+	if (game->ray.angle == 0 || fabs(game->ray.angle - M_PI) < 0.0001)
 	{
 		game->ray.x = game->player.pos_x;
 		game->ray.y = game->player.pos_y;
@@ -33,7 +33,6 @@ void	ft_check_hori(t_game *game)
 			+ game->player.pos_x;
 		game->ray.y_offset = -TILES;
 		game->ray.x_offset = -game->ray.y_offset * game->ray.a_tan;
-		
 	}
 	else if (game->ray.angle < M_PI)
 	{
@@ -48,7 +47,7 @@ void	ft_check_hori(t_game *game)
 void	ft_check_vert(t_game *game)
 {
 	if (fabs(game->ray.angle - M_PI / 2) < 0.0001
-			|| fabs(game->ray.angle - 3 * M_PI / 2) < 0.0001)
+		|| fabs(game->ray.angle - 3 * M_PI / 2) < 0.0001)
 	{
 		game->ray.x = game->player.pos_x;
 		game->ray.y = game->player.pos_y;
@@ -61,7 +60,6 @@ void	ft_check_vert(t_game *game)
 			+ game->player.pos_y;
 		game->ray.x_offset = -TILES;
 		game->ray.y_offset = -game->ray.x_offset * game->ray.n_tan;
-		
 	}
 	else if (game->ray.angle < M_PI / 2 || game->ray.angle > 3 * M_PI / 2)
 	{
@@ -78,15 +76,18 @@ void	ft_check_hori_ray(t_game *game)
 	game->ray.mx = (int)(game->ray.x) >> 6;
 	game->ray.my = (int)(game->ray.y) >> 6;
 	if (game->ray.mx >= 0 && game->ray.mx < game->map.width
-			&& game->ray.my >= 0 && game->ray.my < game->map.height)
+		&& game->ray.my >= 0 && game->ray.my < game->map.height)
 	{
-		if (game->map.grid[game->ray.my][game->ray.mx] == '1')
+		if (game->map.grid[game->ray.my][game->ray.mx] == '1'
+				|| game->map.grid[game->ray.my][game->ray.mx] == 'D')
 		{
 			game->ray.hx = game->ray.x;
 			game->ray.hy = game->ray.y;
 			game->ray.t_h = ft_dist(game, game->ray.hx, game->ray.hy);
 			game->ray.dof = game->ray.max_dof;
 		}
+		else if (game->map.grid[game->ray.my][game->ray.mx] == 'O')
+			ft_set_door_hori_rays(game);
 		else
 		{
 			game->ray.x += game->ray.x_offset;
@@ -103,15 +104,18 @@ void	ft_check_vert_ray(t_game *game)
 	game->ray.mx = (int)(game->ray.x) >> 6;
 	game->ray.my = (int)(game->ray.y) >> 6;
 	if (game->ray.mx >= 0 && game->ray.mx < game->map.width
-			&& game->ray.my >= 0 && game->ray.my < game->map.height)
+		&& game->ray.my >= 0 && game->ray.my < game->map.height)
 	{
-		if (game->map.grid[game->ray.my][game->ray.mx] == '1')
+		if (game->map.grid[game->ray.my][game->ray.mx] == '1'
+			|| game->map.grid[game->ray.my][game->ray.mx] == 'D')
 		{
 			game->ray.vx = game->ray.x;
 			game->ray.vy = game->ray.y;
 			game->ray.t_v = ft_dist(game, game->ray.vx, game->ray.vy);
 			game->ray.dof = game->ray.max_dof;
 		}
+		else if (game->map.grid[game->ray.my][game->ray.mx] == 'O')
+			ft_set_door_vert_rays(game);
 		else
 		{
 			game->ray.x += game->ray.x_offset;

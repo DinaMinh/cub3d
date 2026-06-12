@@ -67,7 +67,7 @@ void	free_tab(char **tab)
 	int	len;
 	int	i;
 
-	len = ft_strlen(tab);
+	len = ft_strlen(*tab);
 	i = 0;
 	while (i < len)
 	{

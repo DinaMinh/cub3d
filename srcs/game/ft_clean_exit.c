@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 10:44:05 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/09 10:44:05 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/12 10:22:23 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ void	ft_destroy_textures(t_game *game)
 		mlx_destroy_image(game->mlx_ptr, game->west.img);
 	if (game->east.img)
 		mlx_destroy_image(game->mlx_ptr, game->east.img);
+	if (game->door.img)
+		mlx_destroy_image(game->mlx_ptr, game->door.img);
+	if (game->d_anim.frame1.img)
+		mlx_destroy_image(game->mlx_ptr, game->d_anim.frame1.img);
+	if (game->d_anim.frame2.img)
+		mlx_destroy_image(game->mlx_ptr, game->d_anim.frame2.img);
+	if (game->sword.img)
+		mlx_destroy_image(game->mlx_ptr, game->sword.img);
+	if (game->sword_anim.frame1.img)
+		mlx_destroy_image(game->mlx_ptr, game->sword_anim.frame1.img);
+	if (game->sword_anim.frame2.img)
+		mlx_destroy_image(game->mlx_ptr, game->sword_anim.frame2.img);
 	if (game->img)
 		mlx_destroy_image(game->mlx_ptr, game->img);
 }

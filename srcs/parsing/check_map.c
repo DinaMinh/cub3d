@@ -6,7 +6,7 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/11 13:13:05 by ebourdet          #+#    #+#             */
-/*   Updated: 2026/06/11 13:34:59 by ebourdet         ###   ########.fr       */
+/*   Updated: 2026/06/11 14:43:37 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	validate_map_walls(t_map *map)
 			{
 				if (check_neighbors(map, y, x) == 0)
 					return (0);
-				if (map->grid[y][x] != '0')
+				if (map->grid[y][x] != '0' && map->grid[y][x] != 'D')
 					player_count++;
 			}
 		}
