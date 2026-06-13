@@ -35,11 +35,13 @@
 # define M_TILES 16
 # define M_SCALE 4
 # define PLAYER_W 2
+# define SWORD_SIZE 32
 # define SWORD_SCALE 15
 # define SWORD_PADDING 150
 # define SPEED 6
 # define MOUSE_ROTATION 0.001
 # define FOV 60
+# define DIFF 0.0001
 
 # define YELLOW 0x00FFFF00
 # define RED 0x00CC3300

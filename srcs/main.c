@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:46:53 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/12 11:39:13 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/13 10:28:33 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	ft_starting_orientation(&game);
-	game.sword_anim.size = TILES / 2;
 	ft_game(&game);
 	return (0);
 }
