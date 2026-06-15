@@ -59,6 +59,8 @@ int	parse_rgb(char **rgb)
 	i = 0;
 	while (rgb[i])
 	{
+		if (i > 2)
+			return (-1);
 		color[i] = ft_atoi(rgb[i]);
 		if (color[i] < 0 || color[i] > 255)
 			return (-1);

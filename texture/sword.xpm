@@ -2,7 +2,7 @@
 static char *sword[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 9 1 ",
-"  c None",
+"  c #000000",
 ". c #4A4516",
 "X c #574018",
 "o c #6B481E",

@@ -6,19 +6,31 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/11 13:13:05 by ebourdet          #+#    #+#             */
-/*   Updated: 2026/06/11 14:43:37 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/15 16:36:40 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+int	is_valid_char(char c)
+{
+	if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == 'D'
+			|| c == '1')
+		return (1);
+	return (0);
+}
+
 int	check_neighbors(t_map *map, int y, int x)
 {
 	if (y == 0 || y == map->height - 1 || x == 0 || x == map->width - 1)
 		return (0);
-	if (map->grid[y - 1][x] == ' ' || map->grid[y + 1][x] == ' ')
+	if (map->grid[y - 1][x] == ' ' || map->grid[y + 1][x] == ' '
+			|| !is_valid_char(map->grid[y - 1][x])
+			|| !is_valid_char(map->grid[y + 1][x]))
 		return (0);
-	if (map->grid[y][x - 1] == ' ' || map->grid[y][x + 1] == ' ')
+	if (map->grid[y][x - 1] == ' ' || map->grid[y][x + 1] == ' '
+			|| !is_valid_char(map->grid[y][x - 1])
+			|| !is_valid_char(map->grid[y][x + 1]))
 		return (0);
 	return (1);
 }

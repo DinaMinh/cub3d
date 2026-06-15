@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/12 11:31:05 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/12 11:58:50 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/15 10:40:24 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_door_anim(t_game *game)
 {
 	long long	elapsed;
 
-	game->d_anim.map_x = (int)game->ray.x >> 6;
-	game->d_anim.map_y = (int)game->ray.y >> 6;
+	game->d_anim.map_x = (int)game->ray.x >> TILE_SHIFT;
+	game->d_anim.map_y = (int)game->ray.y >> TILE_SHIFT;
 	elapsed = 0;
 	if (game->d_anim.map_x >= 0 && game->d_anim.map_x < game->map.width
 		&& game->d_anim.map_y >= 0 && game->d_anim.map_y < game->map.height)

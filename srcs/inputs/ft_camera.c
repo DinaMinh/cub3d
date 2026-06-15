@@ -16,13 +16,13 @@ void	ft_camera(int keysym, t_game *game)
 {
 	if (keysym == XK_Left)
 	{
-		game->player.angle -= 0.1;
+		game->player.angle -= CAM_ANGLE;
 		if (game->player.angle < 0)
 			game->player.angle += 2 * M_PI;
 	}
 	else
 	{
-		game->player.angle += 0.1;
+		game->player.angle += CAM_ANGLE;
 		if (game->player.angle > 2 * M_PI)
 			game->player.angle -= 2 * M_PI;
 	}

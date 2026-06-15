@@ -19,7 +19,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 	{
 		printf("Error\nUsage: ./cub3D <file.cub>\n");
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	ft_memset(&game, 0, sizeof(game));
 	init_map_struct(&game.map);
@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 		|| !validate_map_walls(&game.map))
 	{
 		printf("error map\n");
-		return (1);
+		ft_clean_exit(&game, EXIT_FAILURE);
 	}
 	ft_starting_orientation(&game);
 	ft_game(&game);

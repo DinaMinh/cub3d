@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 16:06:32 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/12 11:51:33 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/15 16:27:53 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,10 @@ void	ft_game(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
-		exit(EXIT_FAILURE);
+		ft_clean_exit(game, EXIT_FAILURE);
 	game->win_ptr = mlx_new_window(game->mlx_ptr, W_WIDTH, W_HEIGHT, "cub3D");
 	if (!game->win_ptr)
-	{
-		mlx_destroy_display(game->mlx_ptr);
-		exit(EXIT_FAILURE);
-	}
+		ft_clean_exit(game, EXIT_FAILURE);
 	ft_initial_mouse_pos(game);
 	ft_init_texture(game);
 	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,

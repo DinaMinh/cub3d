@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 10:45:17 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/12 13:22:39 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/15 17:09:27 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_draw_map(t_game *game)
 
 	y = 0;
 	ft_get_delta(game);
+	ft_draw_minimap_bg(game);
 	while (game->map.grid[y])
 	{
 		ft_minimap_loop(game, y);

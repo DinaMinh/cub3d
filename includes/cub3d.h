@@ -29,16 +29,18 @@
 # define W_HEIGHT 720
 # define MS 1000
 # define FPS 60
-# define CENTER_X 50
-# define CENTER_Y 50
+# define CENTER_X 105
+# define CENTER_Y 105
 # define TILES 64
 # define M_TILES 16
 # define M_SCALE 4
-# define PLAYER_W 2
+# define PLAYER_W 4
+# define CAM_ANGLE 0.1
 # define SWORD_SIZE 32
-# define SWORD_SCALE 15
+# define SWORD_SCALE 22
 # define SWORD_PADDING 150
 # define SPEED 6
+# define TILE_SHIFT 6
 # define MOUSE_ROTATION 0.001
 # define FOV 60
 # define DIFF 0.0001
@@ -249,6 +251,7 @@ void			ft_draw_rays(t_game *game);
 void			ft_draw_minimap_rays(t_game *game);
 void			ft_draw_weapon(t_game *game, t_textures *sword);
 void			ft_minimap_loop(t_game *game, int y);
+void			ft_draw_minimap_bg(t_game *game);
 
 /*=======================*/
 
@@ -301,7 +304,7 @@ void			ft_initial_mouse_pos(t_game *game);
 
 long long		ft_get_time(void);
 int				ft_game_hook(t_game *game);
-int				ft_clean_exit(t_game *game);
+int				ft_clean_exit(t_game *game, int return_value);
 int				ft_game_hook(t_game *game);
 void			ft_init_texture(t_game *game);
 void			ft_get_delta(t_game *game);

@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 17:04:19 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/12 12:23:21 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/15 10:41:17 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ float	ft_dist(t_game *game, float x, float y)
 
 void	ft_check_hori(t_game *game)
 {
-	if (game->ray.angle == 0 || fabs(game->ray.angle - M_PI) < 0.0001)
+	if (game->ray.angle == 0 || fabs(game->ray.angle - M_PI) < DIFF)
 	{
 		game->ray.x = game->player.pos_x;
 		game->ray.y = game->player.pos_y;
@@ -28,7 +28,8 @@ void	ft_check_hori(t_game *game)
 	}
 	else if (game->ray.angle > M_PI)
 	{
-		game->ray.y = (((int)game->player.pos_y >> 6) << 6) - 0.0001;
+		game->ray.y = (((int)game->player.pos_y >> TILE_SHIFT)
+				<< TILE_SHIFT) - DIFF;
 		game->ray.x = (game->player.pos_y - game->ray.y) * game->ray.a_tan
 			+ game->player.pos_x;
 		game->ray.y_offset = -TILES;
@@ -36,7 +37,8 @@ void	ft_check_hori(t_game *game)
 	}
 	else if (game->ray.angle < M_PI)
 	{
-		game->ray.y = (((int)game->player.pos_y >> 6) << 6) + TILES;
+		game->ray.y = (((int)game->player.pos_y >> TILE_SHIFT)
+				<< TILE_SHIFT) + TILES;
 		game->ray.x = (game->player.pos_y - game->ray.y) * game->ray.a_tan
 			+ game->player.pos_x;
 		game->ray.y_offset = TILES;
@@ -46,8 +48,8 @@ void	ft_check_hori(t_game *game)
 
 void	ft_check_vert(t_game *game)
 {
-	if (fabs(game->ray.angle - M_PI / 2) < 0.0001
-		|| fabs(game->ray.angle - 3 * M_PI / 2) < 0.0001)
+	if (fabs(game->ray.angle - M_PI / 2) < DIFF
+		|| fabs(game->ray.angle - 3 * M_PI / 2) < DIFF)
 	{
 		game->ray.x = game->player.pos_x;
 		game->ray.y = game->player.pos_y;
@@ -55,7 +57,8 @@ void	ft_check_vert(t_game *game)
 	}
 	else if (game->ray.angle > M_PI / 2 && game->ray.angle < 3 * M_PI / 2)
 	{
-		game->ray.x = (((int)game->player.pos_x >> 6) << 6) - 0.0001;
+		game->ray.x = (((int)game->player.pos_x >> TILE_SHIFT)
+				<< TILE_SHIFT) - DIFF;
 		game->ray.y = (game->player.pos_x - game->ray.x) * game->ray.n_tan
 			+ game->player.pos_y;
 		game->ray.x_offset = -TILES;
@@ -63,7 +66,8 @@ void	ft_check_vert(t_game *game)
 	}
 	else if (game->ray.angle < M_PI / 2 || game->ray.angle > 3 * M_PI / 2)
 	{
-		game->ray.x = (((int)game->player.pos_x >> 6) << 6) + TILES;
+		game->ray.x = (((int)game->player.pos_x >> TILE_SHIFT)
+				<< TILE_SHIFT) + TILES;
 		game->ray.y = (game->player.pos_x - game->ray.x) * game->ray.n_tan
 			+ game->player.pos_y;
 		game->ray.x_offset = TILES;
@@ -73,8 +77,8 @@ void	ft_check_vert(t_game *game)
 
 void	ft_check_hori_ray(t_game *game)
 {
-	game->ray.mx = (int)(game->ray.x) >> 6;
-	game->ray.my = (int)(game->ray.y) >> 6;
+	game->ray.mx = (int)(game->ray.x) >> TILE_SHIFT;
+	game->ray.my = (int)(game->ray.y) >> TILE_SHIFT;
 	if (game->ray.mx >= 0 && game->ray.mx < game->map.width
 		&& game->ray.my >= 0 && game->ray.my < game->map.height)
 	{
@@ -101,8 +105,8 @@ void	ft_check_hori_ray(t_game *game)
 
 void	ft_check_vert_ray(t_game *game)
 {
-	game->ray.mx = (int)(game->ray.x) >> 6;
-	game->ray.my = (int)(game->ray.y) >> 6;
+	game->ray.mx = (int)(game->ray.x) >> TILE_SHIFT;
+	game->ray.my = (int)(game->ray.y) >> TILE_SHIFT;
 	if (game->ray.mx >= 0 && game->ray.mx < game->map.width
 		&& game->ray.my >= 0 && game->ray.my < game->map.height)
 	{

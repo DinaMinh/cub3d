@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 10:48:11 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/10 09:59:12 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/15 17:37:29 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ void	ft_pixel_put(t_game *game, int x, int y, int color)
 void	ft_pixel_put_map(t_game *game, int x, int y, int color)
 {
 	char	*dst;
+	int		sq_dist;
 
-	if (y < 0 || y > 250 || x < 0 || x > 250)
+	if (y < 0 || y > 2 * CENTER_Y || x < 0 || x > CENTER_X * 2)
+		return ;
+	sq_dist = (x - CENTER_X) * (x - CENTER_X) + (y - CENTER_Y) * (y - CENTER_Y);
+	if (sq_dist > (95 * 95))
 		return ;
 	dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;

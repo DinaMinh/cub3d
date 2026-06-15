@@ -6,7 +6,7 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/11 13:13:10 by ebourdet          #+#    #+#             */
-/*   Updated: 2026/06/11 13:34:03 by ebourdet         ###   ########.fr       */
+/*   Updated: 2026/06/15 11:59:56 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ char	*dup_without_newline(char *line)
 
 void	free_tab(char **tab)
 {
-	int	len;
 	int	i;
 
-	len = ft_strlen(*tab);
 	i = 0;
-	while (i < len)
+	if (!tab)
+		return ;
+	while (tab[i])
 	{
 		free(tab[i]);
 		i++;

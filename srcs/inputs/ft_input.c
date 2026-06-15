@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/26 10:13:19 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/12 09:50:46 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/15 11:36:34 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_key_release(int keysym, t_game *game)
 		game->key[R_ARROW] = 0;
 }
 
-int	ft_input(int keysym, t_game *game)
+void	ft_interaction(t_game *game)
 {
 	int	offset;
 	int	d_x;
@@ -53,13 +53,7 @@ int	ft_input(int keysym, t_game *game)
 	offset = TILES;
 	d_x = (int)(game->player.pos_x + (game->player.dir_x * offset)) / TILES;
 	d_y = (int)(game->player.pos_y + (game->player.dir_y * offset)) / TILES;
-	if (keysym == XK_Escape)
-		ft_clean_exit(game);
-	if (keysym == XK_S || keysym == XK_s || keysym == XK_W || keysym == XK_w
-		|| keysym == XK_A || keysym == XK_a || keysym == XK_D
-		|| keysym == XK_d || keysym == XK_Left || keysym == XK_Right)
-		ft_key_press(keysym, game);
-	if (keysym == XK_E || keysym == XK_e)
+	if (d_y >= 0 && d_y < game->map.height && d_x >= 0 && d_x < game->map.width)
 	{
 		if (game->map.grid[d_y][d_x] == 'D')
 		{
@@ -70,6 +64,18 @@ int	ft_input(int keysym, t_game *game)
 		}
 		game->key[E] = 1;
 	}
+}
+
+int	ft_input(int keysym, t_game *game)
+{
+	if (keysym == XK_Escape)
+		ft_clean_exit(game, EXIT_SUCCESS);
+	if (keysym == XK_S || keysym == XK_s || keysym == XK_W || keysym == XK_w
+		|| keysym == XK_A || keysym == XK_a || keysym == XK_D
+		|| keysym == XK_d || keysym == XK_Left || keysym == XK_Right)
+		ft_key_press(keysym, game);
+	if (keysym == XK_E || keysym == XK_e)
+		ft_interaction(game);
 	return (EXIT_SUCCESS);
 }
 

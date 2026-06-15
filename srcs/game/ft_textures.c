@@ -24,7 +24,7 @@ static void	ft_init_wall(t_game *game, int width, int height)
 			game->map.ea_tex_path, &width, &height);
 	if (!game->north.img || !game->south.img || !game->west.img
 		|| !game->east.img)
-		ft_clean_exit(game);
+		ft_clean_exit(game, EXIT_FAILURE);
 	game->north.addr = mlx_get_data_addr(game->north.img,
 			&game->north.bits_per_pixel, &game->north.line_length,
 			&game->north.endian);
@@ -48,7 +48,7 @@ static void	ft_init_door(t_game *game, int width, int height)
 	game->d_anim.frame2.img = mlx_xpm_file_to_image(game->mlx_ptr,
 			"./texture/d_anim2.xpm", &width, &height);
 	if (!game->door.img || !game->d_anim.frame1.img || !game->d_anim.frame2.img)
-		ft_clean_exit(game);
+		ft_clean_exit(game, EXIT_FAILURE);
 	game->door.addr = mlx_get_data_addr(game->door.img,
 			&game->door.bits_per_pixel, &game->door.line_length,
 			&game->door.endian);
@@ -70,7 +70,7 @@ static void	ft_init_sword(t_game *game, int width, int height)
 			"./texture/sword_hit2.xpm", &width, &height);
 	if (!game->sword.img || !game->sword_anim.frame1.img
 		|| !game->sword_anim.frame2.img)
-		ft_clean_exit(game);
+		ft_clean_exit(game, EXIT_FAILURE);
 	game->sword.addr = mlx_get_data_addr(game->sword.img,
 			&game->sword.bits_per_pixel, &game->sword.line_length,
 			&game->sword.endian);
