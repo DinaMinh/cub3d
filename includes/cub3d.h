@@ -233,6 +233,7 @@ int				validate_map_walls(t_map *map);
 void			init_map_struct(t_map *map);
 void			skip_spaces(char *line, int *i);
 void			free_tab(char **tab);
+int				is_valid_char(char c);
 
 /*=======================*/
 

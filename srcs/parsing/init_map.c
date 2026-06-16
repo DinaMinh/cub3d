@@ -62,6 +62,14 @@ char	*dup_without_newline(char *line)
 	return (new_line);
 }
 
+int	is_valid_char(char c)
+{
+	if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == 'D'
+		|| c == '1')
+		return (1);
+	return (0);
+}
+
 void	free_tab(char **tab)
 {
 	int	i;
