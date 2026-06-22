@@ -6,7 +6,7 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:47:31 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/12 14:14:52 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/22 12:27:47 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ typedef struct s_game
 	long long	attack_start;
 	float		screen_x;
 	float		screen_y;
+	int			mouse_dx;
 	int			delta_x;
 	int			delta_y;
 	int			bits_per_pixel;
@@ -233,6 +234,7 @@ int				validate_map_walls(t_map *map);
 void			init_map_struct(t_map *map);
 void			skip_spaces(char *line, int *i);
 void			free_tab(char **tab);
+int				is_valid_char(char c);
 
 /*=======================*/
 
@@ -292,6 +294,7 @@ int				ft_input(int keysym, t_game *game);
 int				ft_release(int keysym, t_game *game);
 int				ft_click_cross(t_game *game);
 int				ft_mouse(int x, int y, t_game *game);
+void			ft_mouse_update(t_game *game);
 void			ft_key_press(int keysym, t_game *game);
 void			ft_key_release(int keysym, t_game *game);
 void			ft_movements(t_game *game);

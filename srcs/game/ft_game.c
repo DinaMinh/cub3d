@@ -6,7 +6,7 @@
 /*   By: dminh <dminh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 16:06:32 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/15 16:27:53 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/22 13:07:46 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,19 +94,19 @@ int	ft_game_hook(t_game *game)
 		last_frame = current_frame;
 		ft_draw_background(game);
 		ft_movements(game);
-	}
-	if (game->d_anim.opening)
-	{
-		if (current_frame - game->d_anim.start_time >= 200)
+		if (game->d_anim.opening)
 		{
-			game->map.grid[game->d_anim.open_y][game->d_anim.open_x] = 'O';
-			game->d_anim.opening = false;
+			if (current_frame - game->d_anim.start_time >= 200)
+			{
+				game->map.grid[game->d_anim.open_y][game->d_anim.open_x] = 'O';
+				game->d_anim.opening = false;
+			}
 		}
+		ft_draw_rays(game);
+		ft_sword_animation(game, current_frame);
+		ft_draw_map(game);
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
 	}
-	ft_draw_rays(game);
-	ft_sword_animation(game, current_frame);
-	ft_draw_map(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
 	return (0);
 }
 
@@ -121,12 +121,12 @@ void	ft_game(t_game *game)
 	ft_initial_mouse_pos(game);
 	ft_init_texture(game);
 	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,
-		(int (*)())ft_click_cross, game);
+			(int (*)())ft_click_cross, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, (int (*)())ft_input, game);
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask,
-		(int (*)())(void (*)(void))ft_key_release, game);
+			(int (*)())(void (*)(void))ft_key_release, game);
 	mlx_hook(game->win_ptr, MotionNotify, PointerMotionMask,
-		(int (*)())(void (*)(void))ft_mouse, game);
+			(int (*)())(void (*)(void))ft_mouse, game);
 	game->player.dir_x = cos(game->player.angle);
 	game->player.dir_y = sin(game->player.angle);
 	ft_draw_rays(game);
