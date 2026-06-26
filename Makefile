@@ -91,6 +91,10 @@ $(BIN_DIR)$(NAME): $(OBJ) $(LIBFT) $(MLX) | $(BIN_DIR)
 	@echo -----------------------------------------
 
 $(MLX):
+	@if [ ! -d "minilibx-linux" ]; then \
+		echo "The minilibx folder was not found. Cloning the source.\n"; \
+		git clone https://github.com/42paris/minilibx-linux.git; \
+	fi
 	$(MAKE) -C $(MLX_DIR)
 
 debug: $(LIBFT) $(MLX) | $(BIN_DIR)

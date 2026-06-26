@@ -6,7 +6,7 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:47:31 by dminh             #+#    #+#             */
-/*   Updated: 2026/06/22 12:27:47 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/26 10:39:15 by dminh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ void			init_map_struct(t_map *map);
 void			skip_spaces(char *line, int *i);
 void			free_tab(char **tab);
 int				is_valid_char(char c);
+int				msg_err(char *msg);
 
 /*=======================*/
 

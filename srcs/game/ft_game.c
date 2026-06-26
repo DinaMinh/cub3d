@@ -121,17 +121,19 @@ void	ft_game(t_game *game)
 	ft_initial_mouse_pos(game);
 	ft_init_texture(game);
 	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,
-			(int (*)())ft_click_cross, game);
-	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, (int (*)())ft_input, game);
+		(int (*)())(void (*)(void))ft_click_cross, game);
+	mlx_hook(game->win_ptr, KeyPress, KeyPressMask,
+		(int (*)())(void (*)(void))ft_input, game);
 	mlx_hook(game->win_ptr, KeyRelease, KeyReleaseMask,
-			(int (*)())(void (*)(void))ft_key_release, game);
+		(int (*)())(void (*)(void))ft_key_release, game);
 	mlx_hook(game->win_ptr, MotionNotify, PointerMotionMask,
-			(int (*)())(void (*)(void))ft_mouse, game);
+		(int (*)())(void (*)(void))ft_mouse, game);
 	game->player.dir_x = cos(game->player.angle);
 	game->player.dir_y = sin(game->player.angle);
 	ft_draw_rays(game);
 	ft_draw_map(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img, 0, 0);
-	mlx_loop_hook(game->mlx_ptr, (int (*)())ft_game_hook, game);
+	mlx_loop_hook(game->mlx_ptr,
+		(int (*)())(void (*)(void))ft_game_hook, game);
 	mlx_loop(game->mlx_ptr);
 }
