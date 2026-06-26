@@ -6,7 +6,7 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/11 13:13:10 by ebourdet          #+#    #+#             */
-/*   Updated: 2026/06/15 11:59:56 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/26 08:46:04 by ebourdet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*get_valid_path(char *str)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
+		ft_putstr_fd("Error\nFichier texture introuvable/inouvrable\n", 2);
 		free(path);
 		return (NULL);
 	}

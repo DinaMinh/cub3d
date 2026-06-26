@@ -6,7 +6,7 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/11 13:13:05 by ebourdet          #+#    #+#             */
-/*   Updated: 2026/06/16 11:13:40 by dminh            ###   ########.fr       */
+/*   Updated: 2026/06/26 08:46:10 by ebourdet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ int	validate_map_walls(t_map *map)
 		while (++x < map->width)
 		{
 			if (!is_valid_char(map->grid[y][x]) && map->grid[y][x] != ' ')
-				return (0);
+				return (msg_err("Caractère invalide dans la map\n"));
 			if (is_floor_or_player(map->grid[y][x]))
 			{
 				if (check_neighbors(map, y, x) == 0)
-					return (0);
+					return (msg_err("Mur manquant\n"));
 				if (map->grid[y][x] != '0' && map->grid[y][x] != 'D')
 					player_count++;
 			}
 		}
 	}
 	if (player_count != 1)
-		return (0);
+		return (msg_err("Nombre de joueurs invalide (1 requis)\n"));
 	return (1);
 }

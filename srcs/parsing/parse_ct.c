@@ -6,7 +6,7 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/11 13:13:22 by ebourdet          #+#    #+#             */
-/*   Updated: 2026/06/11 13:27:44 by ebourdet         ###   ########.fr       */
+/*   Updated: 2026/06/26 08:46:18 by ebourdet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	parse_texture(char *line, t_map *map)
 		map->ea_tex_path = path;
 	else
 	{
+		ft_putstr_fd("Error\nTexture en trop ou identifiant invalide\n", 2);
 		free(path);
 		return (0);
 	}
@@ -60,14 +61,23 @@ int	parse_rgb(char **rgb)
 	while (rgb[i])
 	{
 		if (i > 2)
+		{
+			ft_putstr_fd("Error\nFormat RGB invalide, trop de valeurs\n", 2);
 			return (-1);
+		}
 		color[i] = ft_atoi(rgb[i]);
 		if (color[i] < 0 || color[i] > 255)
+		{
+			ft_putstr_fd("Error\nValeur RGB hors limites (0-255)\n", 2);
 			return (-1);
+		}
 		i++;
 	}
 	if (i != 3)
+	{
+		ft_putstr_fd("Error\nFormat RGB invalide (valeurs manquantes)\n", 2);
 		return (-1);
+	}
 	return ((color[0] << 16) | (color[1] << 8) | color[2]);
 }
 
@@ -88,7 +98,10 @@ int	parse_color(char *line, t_map *map)
 	else if (line[0] == 'C' && map->ceiling_color == -1)
 		map->ceiling_color = color;
 	else
+	{
+		ft_putstr_fd("Error\nCouleur en trop ou identifiant invalide\n", 2);
 		return (0);
+	}
 	return (1);
 }
 
@@ -98,9 +111,15 @@ int	parse_map_line(char *line, t_map *map)
 	t_list	*new_node;
 
 	if (!all_elements_loaded(map))
+	{
+		ft_putstr_fd("Error\nÉlément manquant avant la map\n", 2);
 		return (0);
+	}
 	if (map->empty_line_seen == 1)
+	{
+		ft_putstr_fd("Error\nLigne vide au milieu de la map\n", 2);
 		return (0);
+	}
 	map->map_started = 1;
 	clean_line = dup_without_newline(line);
 	if (!clean_line)

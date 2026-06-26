@@ -6,7 +6,7 @@
 /*   By: ebourdet <ebourdet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/11 13:13:28 by ebourdet          #+#    #+#             */
-/*   Updated: 2026/06/11 13:35:50 by ebourdet         ###   ########.fr       */
+/*   Updated: 2026/06/26 08:46:29 by ebourdet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,13 @@ int	is_empty_or_whitespace(char *str)
 	skip_spaces(str, &i);
 	if (str[i] == '\0' || str[i] == '\n')
 		return (1);
+	return (0);
+}
+
+int	msg_err(char *msg)
+{
+	ft_putstr_fd("Error\n", 2);
+	if (msg)
+		ft_putstr_fd(msg, 2);
 	return (0);
 }
