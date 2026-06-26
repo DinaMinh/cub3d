@@ -27,6 +27,7 @@ The program handles window management smoothly and displays different wall textu
     ```
 
 ## Resources
+- Every sprites were drawn by Emba.
 -[3D Sage Raycaster vids](https://www.youtube.com/playlist?list=PLMTDxt7L_MNXx7QP80seZUfcSoJ4jl34D)
 -[lodev Raycasting explanation](https://lodev.org/cgtutor/raycasting.html)
 * The project uses the **miniLibX** graphics library.
